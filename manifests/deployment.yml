@@ -46,7 +46,18 @@ spec:
       - env:
         - name: RedisConnectionString
           value: {{RedisConnectionString}}
-
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
+          value: {{ApiAppInsightsInstrumentationkey}}
+        - name: LoggingRedisConnectionString
+          value: {{LoggingRedisConnectionString}}
+        - name: EnvironmentName
+          value: {{EnvironmentName}}
+        - name: AzureAdTenantId
+          value: {{EnvironmentName}}
+        - name: AzureAdResourceId
+          value: {{AzureAdResourceId}}
+        - name: AzureAdClientId
+          value: {{AzureAdClientId}}
         image: {{ApiImage}}
         imagePullPolicy: IfNotPresent
         name: das-tools-notifications
