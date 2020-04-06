@@ -59,12 +59,11 @@ namespace SFA.DAS.ToolsNotifications.Api
                         policy.RequireRole("Notifications");
                     });
                 });
-
-                services.AddDistributedMemoryCache();
+                services.AddStackExchangeRedisCache(options => options.Configuration = _configuration["RedisConnectionString"]);
             }
             else
             {
-                services.AddStackExchangeRedisCache(options => options.Configuration = _configuration["RedisConnectionString"]);
+                services.AddDistributedMemoryCache();
             }
 
             services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
