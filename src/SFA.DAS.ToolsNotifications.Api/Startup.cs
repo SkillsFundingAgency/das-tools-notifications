@@ -27,15 +27,7 @@ namespace SFA.DAS.ToolsNotifications.Api
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             _environment = environment;
-            var config = new ConfigurationBuilder()
-                .AddConfiguration(configuration)
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true)
-                .AddJsonFile("appsettings.Development.json", true)
-                .AddEnvironmentVariables()
-                .Build();
-
-            _configuration = config;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
