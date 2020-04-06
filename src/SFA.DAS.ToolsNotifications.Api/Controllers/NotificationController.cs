@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ToolsNotifications.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class NotificationController : ControllerBase
     {
@@ -32,14 +32,9 @@ namespace SFA.DAS.ToolsNotifications.Api.Controllers
         }
 
         [HttpPost]
-        public async Task Post(string title, string description)
+        public async Task Post([FromBody] Notification notification)
         {
-            await _notificationService.SetNotification(new Notification()
-            {
-                Title = title,
-                Description = description,
-                Enabled = true
-            });
+            await _notificationService.SetNotification(notification);
         }
     }
 }
