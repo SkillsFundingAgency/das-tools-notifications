@@ -53,7 +53,7 @@ spec:
         - name: EnvironmentName
           value: {{EnvironmentName}}
         - name: AzureAdTenantId
-          value: {{EnvironmentName}}
+          value: {{AzureAdTenantIds}}
         - name: AzureAdResourceId
           value: {{AzureAdResourceId}}
         - name: AzureAdClientId
