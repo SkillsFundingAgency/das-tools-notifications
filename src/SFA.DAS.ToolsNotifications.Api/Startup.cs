@@ -1,41 +1,125 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using SFA.DAS.ToolsNotifications.Api.Infrastructure;
+using SFA.DAS.ToolsNotifications.Core.Configuration;
 using SFA.DAS.ToolsNotifications.Core.Repositories;
 using SFA.DAS.ToolsNotifications.Core.Services;
 using SFA.DAS.ToolsNotifications.Infrastructure.Repositories;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SFA.DAS.ToolsNotifications.Api
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        private IHostingEnvironment CurrentEnvironment { get; }
+        private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _environment;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
-            Configuration = configuration;
-            CurrentEnvironment = env;
+            _environment = environment;
+            var config = new ConfigurationBuilder()
+                .AddConfiguration(configuration)
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true)
+                .AddJsonFile("appsettings.Development.json", true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            _configuration = config;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddApplicationInsightsTelemetry(_configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
 
-            if (CurrentEnvironment.IsDevelopment())
+            if (!ConfigurationIsLocalOrDev())
             {
+                services.AddAuthentication(auth => { auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
+                    .AddJwtBearer(auth =>
+                    {
+                        auth.Authority =
+                            $"https://login.microsoftonline.com/{_configuration["AzureAdTenantId"]}";
+                        auth.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                        {
+                            ValidAudiences = new List<string>
+                            {
+                            _configuration["AzureADResourceId"],
+                            _configuration["AzureADClientId"]
+                            }
+                        };
+                    });
+
+                services.AddSingleton<IClaimsTransformation, AzureAdScopeClaimTransformation>();
+
+                services.AddAuthorization(options =>
+                {
+                    options.AddPolicy(Constants.AuthorizationPolicyName, policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.RequireRole(Constants.AuthorizationRequiredRoleName);
+                    });
+                });
+
                 services.AddDistributedMemoryCache();
             }
             else
             {
-                services.AddStackExchangeRedisCache(options => options.Configuration = Configuration["RedisConnectionString"]);
+                services.AddStackExchangeRedisCache(options => options.Configuration = _configuration["RedisConnectionString"]);
             }
+
             services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
             services.AddSingleton<INotificationService, NotificationService>();
+
+            services.AddMvc(options =>
+            {
+                if (!ConfigurationIsLocalOrDev())
+                {
+                    options.Filters.Add(new AuthorizeFilter(Constants.AuthorizationPolicyName));
+                }
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = Constants.ApiName, Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                },
+                                Scheme = "oauth2",
+                                Name = "Bearer",
+                                In = ParameterLocation.Header,
+                            },
+                            new List<string>()
+                        }
+                    });
+            });
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,11 +128,32 @@ namespace SFA.DAS.ToolsNotifications.Api
             }
             else
             {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            app.UsePathBase(Constants.PathBase);
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"{Constants.PathBase}/swagger/v1/swagger.json", Constants.ApiName);
+            });
+
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private bool ConfigurationIsLocalOrDev()
+        {
+            return _configuration["EnvironmentName"].Equals("LOCAL", StringComparison.CurrentCultureIgnoreCase) ||
+                   _configuration["EnvironmentName"].Equals("DEV", StringComparison.CurrentCultureIgnoreCase) ||
+                   _environment.IsDevelopment();
         }
     }
 }
