@@ -13,7 +13,6 @@ namespace SFA.DAS.ToolsNotifications.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseNLog();
     }
