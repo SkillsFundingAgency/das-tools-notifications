@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SFA.DAS.ToolsNotifications.Api.Models;
 using SFA.DAS.ToolsNotifications.Core.Entities;
 using SFA.DAS.ToolsNotifications.Core.Services;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ToolsNotifications.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class NotificationController : ControllerBase
     {
@@ -17,7 +18,7 @@ namespace SFA.DAS.ToolsNotifications.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Notification>> Get()
+        public async Task<ActionResult<NotificationDto>> Get()
         {
             var notification = await _notificationService.GetNotification();
 
@@ -27,18 +28,23 @@ namespace SFA.DAS.ToolsNotifications.Api.Controllers
             }
             else
             {
-                return Ok(notification);
+                return Ok(new NotificationDto
+                {
+                    Title = notification.Title,
+                    Description = notification.Description,
+                    Enabled = notification.Enabled
+                });
             }
         }
 
         [HttpPost]
-        public async Task Post(string title, string description)
+        public async Task Post([FromBody] NotificationDto notification)
         {
-            await _notificationService.SetNotification(new Notification()
+            await _notificationService.SetNotification(new Notification
             {
-                Title = title,
-                Description = description,
-                Enabled = true
+                Title = notification.Title,
+                Description = notification.Description,
+                Enabled = notification.Enabled
             });
         }
     }
