@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.DAS.ToolsNotifications.Core\SFA.DAS.ToolsNotifications.Core.csproj" />
+    <ProjectReference Include="..\SFA.DAS.ToolsNotifications.Infrastructure\SFA.DAS.ToolsNotifications.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
