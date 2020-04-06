@@ -20,7 +20,8 @@ namespace SFA.DAS.ToolsNotifications.Infrastructure.Repositories
         public async Task<Notification> GetNotification()
         {
             var notificationJson = await _cache.GetStringAsync(_cacheKey);
-            return JsonConvert.DeserializeObject<Notification>(notificationJson);
+
+            return notificationJson == null ? null : JsonConvert.DeserializeObject<Notification>(notificationJson);
         }
 
         public async Task SetNotification(Notification notification)

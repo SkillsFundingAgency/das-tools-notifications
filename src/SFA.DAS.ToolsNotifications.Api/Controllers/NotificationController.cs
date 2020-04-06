@@ -19,7 +19,16 @@ namespace SFA.DAS.ToolsNotifications.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<Notification>> Get()
         {
-            return await _notificationService.GetNotification();
+            var notification = await _notificationService.GetNotification();
+
+            if (notification == null)
+            {
+                return NotFound("No notifications have been set");
+            }
+            else
+            {
+                return Ok(notification);
+            }
         }
 
         [HttpPost]
