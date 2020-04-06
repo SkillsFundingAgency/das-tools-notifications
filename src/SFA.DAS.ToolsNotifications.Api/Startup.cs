@@ -9,13 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SFA.DAS.ToolsNotifications.Api.Infrastructure;
-using SFA.DAS.ToolsNotifications.Core.Configuration;
 using SFA.DAS.ToolsNotifications.Core.Repositories;
 using SFA.DAS.ToolsNotifications.Core.Services;
 using SFA.DAS.ToolsNotifications.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SFA.DAS.ToolsNotifications.Api
 {
@@ -55,10 +53,10 @@ namespace SFA.DAS.ToolsNotifications.Api
 
                 services.AddAuthorization(options =>
                 {
-                    options.AddPolicy(Constants.AuthorizationPolicyName, policy =>
+                    options.AddPolicy("RequireNotificationRole", policy =>
                     {
                         policy.RequireAuthenticatedUser();
-                        policy.RequireRole(Constants.AuthorizationRequiredRoleName);
+                        policy.RequireRole("Notifications");
                     });
                 });
 
@@ -76,13 +74,13 @@ namespace SFA.DAS.ToolsNotifications.Api
             {
                 if (!ConfigurationIsLocalOrDev())
                 {
-                    options.Filters.Add(new AuthorizeFilter(Constants.AuthorizationPolicyName));
+                    options.Filters.Add(new AuthorizeFilter("RequireNotificationRole"));
                 }
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = Constants.ApiName, Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = _configuration["ApiName"], Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -124,7 +122,7 @@ namespace SFA.DAS.ToolsNotifications.Api
                 app.UseHsts();
             }
 
-            app.UsePathBase(Constants.PathBase);
+            app.UsePathBase(_configuration["PathBase"]);
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
@@ -133,7 +131,7 @@ namespace SFA.DAS.ToolsNotifications.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"{Constants.PathBase}/swagger/v1/swagger.json", Constants.ApiName);
+                c.SwaggerEndpoint($"{_configuration["PathBase"]}/swagger/v1/swagger.json", _configuration["ApiName"]);
             });
 
             app.UseAuthentication();

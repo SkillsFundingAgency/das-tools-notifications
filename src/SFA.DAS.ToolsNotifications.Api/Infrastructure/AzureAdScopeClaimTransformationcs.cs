@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using SFA.DAS.ToolsNotifications.Core.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +9,11 @@ namespace SFA.DAS.ToolsNotifications.Api.Infrastructure
 {
     public class AzureAdScopeClaimTransformation : IClaimsTransformation
     {
+        private readonly string scopeClaimType = "http://schemas.microsoft.com/identity/claims/scope";
+
         public Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
-            var scopeClaims = principal.FindAll((string)Constants.ScopeClaimType).ToList();
+            var scopeClaims = principal.FindAll((string)scopeClaimType).ToList();
             if (scopeClaims.Count != 1 || !scopeClaims[0].Value.Contains(' '))
             {
                 // Caller has no scopes or has multiple scopes (already split)
@@ -22,7 +23,7 @@ namespace SFA.DAS.ToolsNotifications.Api.Infrastructure
 
             Claim claim = scopeClaims[0];
             string[] scopes = claim.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            IEnumerable<Claim> claims = scopes.Select(s => new Claim(Constants.ScopeClaimType, s));
+            IEnumerable<Claim> claims = scopes.Select(s => new Claim(scopeClaimType, s));
 
             return Task.FromResult(new ClaimsPrincipal(new ClaimsIdentity(principal.Identity, claims)));
         }

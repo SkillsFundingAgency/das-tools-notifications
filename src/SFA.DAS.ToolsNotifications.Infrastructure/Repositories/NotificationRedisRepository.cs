@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using SFA.DAS.ToolsNotifications.Core.Configuration;
 using SFA.DAS.ToolsNotifications.Core.Entities;
 using SFA.DAS.ToolsNotifications.Core.Repositories;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ namespace SFA.DAS.ToolsNotifications.Infrastructure.Repositories
     {
         private readonly IDistributedCache _cache;
 
-        private readonly string _cacheKey = Constants.RedisKey;
+        private readonly string _cacheKey = "das-tools-notification";
 
         public NotificationRedisRepository(IDistributedCache cache)
         {
