@@ -11,7 +11,7 @@ namespace SFA.DAS.ToolsNotifications.Infrastructure.Repositories
     {
         private readonly IDistributedCache _cache;
 
-        private readonly string _cacheKey = Constants.ApiName;
+        private readonly string _cacheKey = Constants.RedisKey;
 
         public NotificationRedisRepository(IDistributedCache cache)
         {
