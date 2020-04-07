@@ -47,4 +47,4 @@ stages:
       displayName: 'Publish Artifact: packagea'
       inputs:
         artifactName: package
-        pathtoPublish: $(Build.ArtifactStagingDirectory)/package'
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/package'
