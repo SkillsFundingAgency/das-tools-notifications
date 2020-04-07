@@ -45,7 +45,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
-        sourceFolder: src/SFA.DAS.ToolsNotifications.Client
+        sourceFolder: src
         contents: '**/*.nupkg'
         targetFolder: '$(Build.ArtifactStagingDirectory)/package'
 
