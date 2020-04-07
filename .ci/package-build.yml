@@ -1,0 +1,56 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - src/SFA.DAS.ToolsNotifications.Client/*
+      - .ci/package-build.yml
+
+pr: none
+
+stages:
+- stage: build
+  displayName: Build Package
+  jobs:
+  - job: build_package
+    displayName: Build Package
+    steps:
+    - task: UseGitVersion@5
+      inputs:
+        versionSpec: 5.x
+        useConfigFile: true
+        configFilePath: GitVersion.yml
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: restore
+        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        arguments: '/p:Configuration=$(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack'
+      inputs:
+        command: pack
+        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        versioningScheme: byBuildNumber
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+        sourceFolder: src/SFA.DAS.ToolsNotifications.Client
+        contents: '**/*.nupkg'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/package'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: packagea'
+      inputs:
+        artifactName: package
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/package'
