@@ -17,6 +17,7 @@ stages:
   displayName: Build Package
   jobs:
   - job: build_package
+    
     steps:
     - task: UseGitVersion@5
       inputs:
@@ -46,7 +47,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
-        sourceFolder: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client
+        sourceFolder: src/SFA.DAS.ToolsNotifications.Client
         contents: '**/*.nupkg'
         targetFolder: '$(Build.ArtifactStagingDirectory)/package'
 
