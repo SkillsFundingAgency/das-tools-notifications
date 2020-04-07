@@ -28,25 +28,25 @@ stages:
       displayName: 'dotnet restore'
       inputs:
         command: restore
-        projects: SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        projects: src\SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client.csproj
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build'
       inputs:
-        projects: SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        projects: src\SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client.csproj
         arguments: '/p:Configuration=$(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet pack'
       inputs:
         command: pack
-        packagesToPack: SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        projects: src\SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client.csproj
         versioningScheme: byBuildNumber
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
-        sourceFolder: SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client
+        sourceFolder: Ssrc\SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client
         contents: '**/*.nupkg'
         targetFolder: '$(Build.ArtifactStagingDirectory)/package'
 
