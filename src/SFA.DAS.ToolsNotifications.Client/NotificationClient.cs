@@ -1,9 +1,8 @@
-using SFA.DAS.ToolService.SharedNotifications.Entities;
-using SFA.DAS.ToolService.SharedNotifications.Repositories;
-using SFA.DAS.ToolService.SharedNotifications.Services;
+using SFA.DAS.ToolsNotifications.Client.Entities;
+using SFA.DAS.ToolsNotifications.Client.Repositories;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ToolService.SharedNotifications
+namespace SFA.DAS.ToolsNotifications.Client
 {
     public class NotificationClient : INotificationClient
     {

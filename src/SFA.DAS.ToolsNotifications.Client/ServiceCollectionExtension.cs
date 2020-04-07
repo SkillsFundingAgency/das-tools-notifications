@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.ToolService.SharedNotifications.Entities;
-using SFA.DAS.ToolService.SharedNotifications.Repositories;
-using SFA.DAS.ToolService.SharedNotifications.Services;
+using SFA.DAS.ToolsNotifications.Client;
+using SFA.DAS.ToolsNotifications.Client.Entities;
+using SFA.DAS.ToolsNotifications.Client.Repositories;
 
 namespace SFA.DAS.ToolService.SharedNotifications
 {

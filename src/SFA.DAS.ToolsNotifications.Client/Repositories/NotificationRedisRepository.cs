@@ -1,9 +1,9 @@
-using SFA.DAS.ToolService.SharedNotifications.Entities;
+using SFA.DAS.ToolsNotifications.Client.Entities;
 using StackExchange.Redis.Extensions.Core;
 using StackExchange.Redis.Extensions.Newtonsoft;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ToolService.SharedNotifications.Repositories
+namespace SFA.DAS.ToolsNotifications.Client.Repositories
 {
     public class NotificationRedisRepository : INotificationRepository
     {
