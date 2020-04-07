@@ -14,7 +14,7 @@ pr: none
 
 stages:
 - stage: build
-  displayName: Build Image
+  displayName: Build Package
   jobs:
   - job: build_package
     steps:
