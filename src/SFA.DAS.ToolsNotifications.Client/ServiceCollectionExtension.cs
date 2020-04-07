@@ -3,11 +3,11 @@ using SFA.DAS.ToolsNotifications.Client;
 using SFA.DAS.ToolsNotifications.Client.Entities;
 using SFA.DAS.ToolsNotifications.Client.Repositories;
 
-namespace SFA.DAS.ToolService.SharedNotifications
+namespace SFA.DAS.ToolsNotifications.Client
 {
     public static class ServiceRegistrationExtension
     {
-        public static void AddSharedNotifications(this IServiceCollection services, NotificationClientConfiguration configuration)
+        public static void AddNotificationClient(this IServiceCollection services, NotificationClientConfiguration configuration)
         {
             var notificationRedisRepository = new NotificationRedisRepository(configuration);
             services.AddSingleton<INotificationClient>(new NotificationClient(notificationRedisRepository));
