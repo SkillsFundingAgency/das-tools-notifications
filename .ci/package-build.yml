@@ -45,7 +45,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs: 
-        contents: '**/*.nupkg'
+        contents: '*.nupkg'
         targetFolder: '$(Build.ArtifactStagingDirectory)/package'
 
     - task: PublishBuildArtifacts@1
