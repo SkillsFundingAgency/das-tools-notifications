@@ -40,13 +40,8 @@ stages:
       inputs:
         command: pack
         projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        packDestination: '$(build.artifactstagingdirectory)/package'
         versioningScheme: byBuildNumber
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-      inputs: 
-        contents: '*.nupkg'
-        targetFolder: '$(Build.ArtifactStagingDirectory)/package'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: packagea'
