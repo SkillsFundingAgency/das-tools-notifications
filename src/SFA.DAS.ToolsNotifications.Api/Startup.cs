@@ -9,7 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SFA.DAS.ToolsNotifications.Api.Infrastructure;
-using SFA.DAS.ToolsNotifications.Core.Repositories;
+using SFA.DAS.ToolsNotifications.Client;
+using SFA.DAS.ToolsNotifications.Client.Configuration;
+using SFA.DAS.ToolsNotifications.Core.IRepositories;
+using SFA.DAS.ToolsNotifications.Core.IServices;
 using SFA.DAS.ToolsNotifications.Core.Services;
 using SFA.DAS.ToolsNotifications.Infrastructure.Repositories;
 using System;
@@ -59,13 +62,9 @@ namespace SFA.DAS.ToolsNotifications.Api
                         policy.RequireRole("Notifications");
                     });
                 });
-                services.AddStackExchangeRedisCache(options => options.Configuration = _configuration["RedisConnectionString"]);
-            }
-            else
-            {
-                services.AddDistributedMemoryCache();
             }
 
+            services.AddNotificationClient(_configuration.Get<NotificationClientConfiguration>());
             services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
             services.AddSingleton<INotificationService, NotificationService>();
 

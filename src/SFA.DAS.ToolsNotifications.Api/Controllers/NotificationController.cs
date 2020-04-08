@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ToolsNotifications.Api.Models;
-using SFA.DAS.ToolsNotifications.Core.Entities;
+using SFA.DAS.ToolsNotifications.Core.IServices;
 using SFA.DAS.ToolsNotifications.Core.Services;
+using SFA.DAS.ToolsNotifications.Types.Entities;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ToolsNotifications.Api.Controllers

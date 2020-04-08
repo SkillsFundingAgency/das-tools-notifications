@@ -1,4 +1,4 @@
-namespace SFA.DAS.ToolsNotifications.Client.Entities
+namespace SFA.DAS.ToolsNotifications.Types.Entities
 {
     public class Notification
     {
