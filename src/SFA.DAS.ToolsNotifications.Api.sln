@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ToolsNotifications.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ToolsNotifications.Client", "SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client.csproj", "{6E448A12-9ED5-4D6F-AE40-2C6E47059DE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mvctest", "mvctest\mvctest.csproj", "{7BA5AF8C-3AF0-4EB1-B8D1-E16D673F9F7E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ToolsNotifications.Infrastructure", "SFA.DAS.ToolsNotifications.Infrastructure\SFA.DAS.ToolsNotifications.Infrastructure.csproj", "{BF51EE0C-F3B2-4A36-A5EA-BE51FDE5F247}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.ToolsNotifications.Types", "SFA.DAS.ToolsNotifications.Types\SFA.DAS.ToolsNotifications.Types.csproj", "{EB191AD2-4A18-4027-9C16-2DB1141C94B8}"
@@ -33,10 +31,6 @@ Global
 		{6E448A12-9ED5-4D6F-AE40-2C6E47059DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E448A12-9ED5-4D6F-AE40-2C6E47059DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E448A12-9ED5-4D6F-AE40-2C6E47059DE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BA5AF8C-3AF0-4EB1-B8D1-E16D673F9F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BA5AF8C-3AF0-4EB1-B8D1-E16D673F9F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BA5AF8C-3AF0-4EB1-B8D1-E16D673F9F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BA5AF8C-3AF0-4EB1-B8D1-E16D673F9F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF51EE0C-F3B2-4A36-A5EA-BE51FDE5F247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF51EE0C-F3B2-4A36-A5EA-BE51FDE5F247}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF51EE0C-F3B2-4A36-A5EA-BE51FDE5F247}.Release|Any CPU.ActiveCfg = Release|Any CPU
