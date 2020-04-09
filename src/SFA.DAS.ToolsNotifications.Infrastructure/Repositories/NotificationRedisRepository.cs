@@ -1,33 +1,27 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using SFA.DAS.ToolsNotifications.Core.Entities;
-using SFA.DAS.ToolsNotifications.Core.Repositories;
+﻿using SFA.DAS.ToolsNotifications.Core.IRepositories;
 using System.Threading.Tasks;
+using SFA.DAS.ToolsNotifications.Client;
+using SFA.DAS.ToolsNotifications.Types.Entities;
 
 namespace SFA.DAS.ToolsNotifications.Infrastructure.Repositories
 {
     public class NotificationRedisRepository : INotificationRepository
     {
-        private readonly IDistributedCache _cache;
+        private readonly INotificationClient _cache;
 
-        private readonly string _cacheKey = "das-tools-notification";
-
-        public NotificationRedisRepository(IDistributedCache cache)
+        public NotificationRedisRepository(INotificationClient cache)
         {
             _cache = cache;
         }
 
         public async Task<Notification> GetNotification()
         {
-            var notificationJson = await _cache.GetStringAsync(_cacheKey);
-
-            return notificationJson == null ? null : JsonConvert.DeserializeObject<Notification>(notificationJson);
+            return await _cache.GetNotification();
         }
 
         public async Task SetNotification(Notification notification)
         {
-            var notificationJson = JsonConvert.SerializeObject(notification);
-            await _cache.SetStringAsync(_cacheKey, notificationJson);
+            await _cache.SetNotification(notification);
         }
     }
 }

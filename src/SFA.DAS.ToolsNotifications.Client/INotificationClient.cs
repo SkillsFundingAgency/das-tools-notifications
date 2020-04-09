@@ -1,9 +1,9 @@
-﻿using SFA.DAS.ToolsNotifications.Types.Entities;
+using SFA.DAS.ToolsNotifications.Types.Entities;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ToolsNotifications.Core.IServices
+namespace SFA.DAS.ToolsNotifications.Client
 {
-    public interface INotificationService
+    public interface INotificationClient
     {
         Task<Notification> GetNotification();
 

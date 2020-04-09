@@ -6,9 +6,12 @@ trigger:
   paths:
     include:
       - manifests/*
+      - .ci/api-build.yml
       - src/*
       - azure-pipelines.yml
       - Dockerfile
+    exclude:
+      - src/SFA.DAS.ToolsNotifications.Client/*
 
 pr: none
 

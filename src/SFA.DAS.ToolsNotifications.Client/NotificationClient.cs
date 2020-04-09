@@ -1,16 +1,14 @@
-﻿using SFA.DAS.ToolsNotifications.Client;
 using SFA.DAS.ToolsNotifications.Types.Entities;
-using SFA.DAS.ToolsNotifications.Core.IServices;
+using SFA.DAS.ToolsNotifications.Client.Requests;
 using System.Threading.Tasks;
-using SFA.DAS.ToolsNotifications.Core.IRepositories;
 
-namespace SFA.DAS.ToolsNotifications.Core.Services
+namespace SFA.DAS.ToolsNotifications.Client
 {
-    public class NotificationService : INotificationService
+    public class NotificationClient : INotificationClient
     {
-        private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationClientRequest _notificationRepository;
 
-        public NotificationService(INotificationRepository notificationRepository)
+        public NotificationClient(INotificationClientRequest notificationRepository)
         {
             _notificationRepository = notificationRepository;
         }

@@ -1,7 +1,7 @@
-﻿using SFA.DAS.ToolsNotifications.Core.Entities;
+﻿using SFA.DAS.ToolsNotifications.Types.Entities;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ToolsNotifications.Core.Repositories
+namespace SFA.DAS.ToolsNotifications.Core.IRepositories
 {
     public interface INotificationRepository
     {
