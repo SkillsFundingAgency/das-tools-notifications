@@ -2,7 +2,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: das-toolwq!-notifications-api
+  name: das-tool-notifications-api
   namespace: {{Namespace}}
 spec:
   entryPoints:
