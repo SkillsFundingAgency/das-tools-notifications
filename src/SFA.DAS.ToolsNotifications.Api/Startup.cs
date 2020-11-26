@@ -33,8 +33,6 @@ namespace SFA.DAS.ToolsNotifications.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry(_configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
-
             if (!ConfigurationIsLocalOrDev())
             {
                 services.AddAuthentication(auth => { auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
@@ -46,8 +44,7 @@ namespace SFA.DAS.ToolsNotifications.Api
                         {
                             ValidAudiences = new List<string>
                             {
-                            _configuration["AzureADResourceId"],
-                            _configuration["AzureADClientId"]
+                                _configuration["AzureADResourceId"]                            
                             }
                         };
                     });

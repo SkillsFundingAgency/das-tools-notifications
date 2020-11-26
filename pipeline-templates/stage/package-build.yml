@@ -1,17 +1,5 @@
-trigger:
-  batch: true
-  branches:
-    include:
-      - "*"
-  paths:
-    include:
-      - src/SFA.DAS.ToolsNotifications.Client/*
-      - .ci/package-build.yml
-
-pr: none
-
 stages:
-- stage: build
+- stage: PackageBuild
   displayName: Build Package
   jobs:
   - job: build_package
@@ -24,27 +12,27 @@ stages:
         configFilePath: GitVersion.yml
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore'
+      displayName: dotnet restore
       inputs:
         command: restore
         projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build'
+      displayName: dotnet build
       inputs:
         projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
-        arguments: '/p:Configuration=Release'
+        arguments: /p:Configuration=Release
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack'
+      displayName: dotnet pack
       inputs:
         command: pack
         projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
-        packDirectory: '$(build.artifactstagingdirectory)/package'
+        packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: packagea'
+      displayName: Publish Artifact - packages
       inputs:
         artifactName: package
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)/package'
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/package

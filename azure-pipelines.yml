@@ -1,0 +1,47 @@
+resources:
+  repositories:
+  - repository: self
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - manifests/*
+      - pipeline-templates/*
+      - src/*
+      - azure-pipelines.yml
+      - Dockerfile
+
+pr: none
+
+stages:
+- template: pipeline-templates/stage/api-build.yml
+
+- template: pipeline-templates/stage/package-build.yml
+
+- stage: DeployTo_DEV
+  displayName: DeployTo_DEV
+  variables:
+  - group: Dev Management Resources
+  - group: Tools - ENV - TEST
+  - name: KubectlVersion
+    value: 1.18.8
+  ##TO DO: update IngressHost value in 'Tools - ENV - TEST' and remove from pipeline file
+  - name: IngressHost
+    value: test-tools.apprenticeships.education.gov.uk
+  jobs:
+  - template: pipeline-templates/job/deploy.yml
+    parameters:
+      Environment: DEV
+      KubectlVersion: $(KubectlVersion)
+      ServiceConnection: SFA-DAS-DevTest-ARM
+      AksResourceGroup: $(AKSResourceGroupName)
+      KubernetesCluster: $(AKSSharedClusterName)
+
+## deploy to PROD stage
+
+## publish nuget package
+- template: pipeline-templates/stage/package-publish.yml
