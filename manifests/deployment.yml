@@ -55,7 +55,7 @@ spec:
         - name: AzureAdTenantId
           value: {{Tenant}}
         - name: AzureAdResourceId
-          value: {{ToolsNotificationApiIdentifierUri}}
+          value: {{ToolsNotificationsApiIdentifierUri}}
         image: apprenticeshipsdevops/das-tools-notifications:{{BuildNumber}}
         imagePullPolicy: IfNotPresent
         name: das-tools-notifications
