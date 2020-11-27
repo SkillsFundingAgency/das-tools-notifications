@@ -27,7 +27,7 @@ stages:
       displayName: dotnet pack
       inputs:
         command: pack
-        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        packagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
