@@ -15,19 +15,19 @@ stages:
       displayName: dotnet restore
       inputs:
         command: restore
-        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Api.csproj
+        projects: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
 
     - task: DotNetCoreCLI@2
       displayName: dotnet build
       inputs:
-        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Api.csproj
+        projects: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
         arguments: /p:Configuration=Release
 
     - task: DotNetCoreCLI@2
       displayName: dotnet pack
       inputs:
         command: pack
-        packagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Api.csproj
+        packagesToPack: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
