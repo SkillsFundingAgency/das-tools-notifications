@@ -4,6 +4,8 @@ stages:
   jobs:
   - job: build_package
     displayName: Build Package
+    pool:
+      name: DAS - Continuous Integration
     steps:
     - task: UseGitVersion@5
       inputs:
@@ -15,19 +17,19 @@ stages:
       displayName: dotnet restore
       inputs:
         command: restore
-        projects: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
+        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
 
     - task: DotNetCoreCLI@2
       displayName: dotnet build
       inputs:
-        projects: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
+        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
         arguments: /p:Configuration=Release
 
     - task: DotNetCoreCLI@2
       displayName: dotnet pack
       inputs:
         command: pack
-        packagesToPack: src/SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
+        packagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
