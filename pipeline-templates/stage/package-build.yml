@@ -31,8 +31,8 @@ stages:
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@1
       displayName: Publish Artifact - packages
       inputs:
-        artifactName: package
         pathtoPublish: $(Build.ArtifactStagingDirectory)/package
+        artifactName: package
