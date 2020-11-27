@@ -5,7 +5,7 @@ resources:
     type: github
     name: SkillsFundingAgency/das-platform-building-blocks
     ref: refs/heads/master
-    endpoint: GitHub (SFA)
+    endpoint: SFA
 
 trigger:
   batch: true
