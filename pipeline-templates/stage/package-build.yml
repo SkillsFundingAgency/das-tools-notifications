@@ -35,4 +35,4 @@ stages:
       displayName: Publish Artifact - packages
       inputs:
         pathtoPublish: $(Build.ArtifactStagingDirectory)/package
-        artifactName: package
+        artifactName: NugetPackages
