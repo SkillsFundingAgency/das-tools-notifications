@@ -1,7 +1,3 @@
-resources:
-  repositories:
-  - repository: self
-
 trigger:
   batch: true
   branches:
