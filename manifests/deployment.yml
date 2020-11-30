@@ -48,8 +48,6 @@ spec:
       - env:
         - name: RedisConnectionString
           value: {{RedisConnectionString}}
-        - name: APPINSIGHTS_INSTRUMENTATIONKEY
-          value: {{APPINSIGHTS_INSTRUMENTATIONKEY}}
         - name: LoggingRedisConnectionString
           value: {{LoggingRedisConnectionString}}
         - name: EnvironmentName
