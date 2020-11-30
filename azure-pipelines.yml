@@ -18,12 +18,11 @@ trigger:
 pr: none
 
 stages:
-#- template: pipeline-templates/stage/api-build.yml
+- template: pipeline-templates/stage/api-build.yml
 
 - template: pipeline-templates/stage/package-build.yml
 
 - stage: DeployTo_DEV
-  condition: failed() ### remove
   displayName: DeployTo_DEV
   variables:
   - group: Dev Management Resources
