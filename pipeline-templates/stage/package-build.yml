@@ -32,23 +32,10 @@ stages:
         packagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
-
-    - task: DotNetCoreCLI@2
-      displayName: dotnet publish
-      inputs:
-        command: publish
-        projects: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
-        arguments: -o $(build.artifactstagingdirectory)/publish -c release
-        publishWebProjects: false
+        includesource: false
 
     - task: PublishPipelineArtifact@1
       displayName: Publish Artifact - packages
       inputs:
         pathtoPublish: $(Build.ArtifactStagingDirectory)/package
         artifactName: NugetPackages
-
-    - task: PublishPipelineArtifact@1
-      displayName: Publish Artifact - packages
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)/publish
-        artifactName: Publish
