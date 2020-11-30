@@ -33,6 +33,8 @@ namespace SFA.DAS.ToolsNotifications.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry(_configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+
             if (!ConfigurationIsLocalOrDev())
             {
                 services.AddAuthentication(auth => { auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })

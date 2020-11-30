@@ -9,7 +9,6 @@ trigger:
       - "*"
   paths:
     include:
-      - azure/*
       - manifests/*
       - pipeline-templates/*
       - src/*
