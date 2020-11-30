@@ -33,8 +33,8 @@ stages:
         packDirectory: $(Build.ArtifactStagingDirectory)/package
         versioningScheme: byBuildNumber
 
-    # - task: PublishPipelineArtifact@1
-    #   displayName: Publish Artifact - packages
-    #   inputs:
-    #     pathtoPublish: $(Build.ArtifactStagingDirectory)/package
-    #     artifactName: NugetPackages
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Artifact - packages
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/package
+        artifactName: NugetPackages
