@@ -24,7 +24,7 @@ stages:
             displayName: NuGet push
             inputs:
               command: push
-              packagesToPush: $(Pipeline.Workspace)/NugetPackages/*.nupkg;!$(Pipeline.Workspace)/NugetPackages/*.symbols.nupkg
+              packagesToPush: $(Pipeline.Workspace)/NugetPackages/**/*.nupkg;!$(Pipeline.Workspace)/NugetPackages/**/*.symbols.nupkg
               nuGetFeedType: external
               publishFeedCredentials: SFA NuGet
             continueOnError: true
