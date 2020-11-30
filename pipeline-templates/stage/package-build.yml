@@ -31,8 +31,7 @@ stages:
         command: pack
         packagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
         packDirectory: $(Build.ArtifactStagingDirectory)/package
-        versioningScheme: byBuildNumber
-        includesource: false
+        versioningScheme: byBuildNumber        
 
     - task: PublishPipelineArtifact@1
       displayName: Publish Artifact - packages
