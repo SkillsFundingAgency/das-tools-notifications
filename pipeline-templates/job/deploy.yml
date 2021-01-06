@@ -15,7 +15,7 @@ jobs:
     name: DAS - Continuous Deployment
   variables:
   - name: KubernetesNamespace
-    value: engineering
+    value: tools
   strategy:
     runOnce:
       deploy:
@@ -34,6 +34,12 @@ jobs:
             tokenPrefix: '{{'
             tokenSuffix: '}}'
             verbosity: detailed
+        - template: azure-pipelines-templates/deploy/step/kubernetes-create-namespace.yml@das-platform-building-blocks
+          parameters:
+            AksClusterName: ${{ parameters.KubernetesCluster }}
+            AksResourceGroupName: ${{ parameters.AksResourceGroup }}
+            AzureServiceConnection: ${{ parameters.ServiceConnection }}
+            Namespace: $(KubernetesNamespace)
         - template: azure-pipelines-templates/deploy/step/kubernetes-create-ingress.yml@das-platform-building-blocks
           parameters:
             AksClusterName: ${{ parameters.KubernetesCluster }}
