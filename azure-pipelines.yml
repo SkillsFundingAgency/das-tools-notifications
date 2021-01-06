@@ -32,7 +32,7 @@ stages:
   variables:
   - group: Dev Management Resources
   - group: TEST Shared Resources
-  - group: Tools - ENV - TEST
+  - group: TEST Tools Service Shared
   - name: KubectlVersion
     value: 1.18.8
   ##TO DO: update IngressHost value in 'Tools - ENV - TEST' and remove from pipeline file
