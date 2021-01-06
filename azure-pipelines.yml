@@ -45,6 +45,9 @@ stages:
       KubectlVersion: $(KubectlVersion)
       ServiceConnection: SFA-DAS-DevTest-ARM
       AksResourceGroup: $(AKSResourceGroupName)
+      AppGatewayName: $(AKSSharedAppGatewayName)
+      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
+      KeyVaultName: $(SharedKeyVaultName)
       KubernetesCluster: $(AKSSharedClusterName)
 
 ## deploy to PROD stage

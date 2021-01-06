@@ -67,6 +67,8 @@ namespace SFA.DAS.ToolsNotifications.Api
             services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
             services.AddSingleton<INotificationService, NotificationService>();
 
+            services.AddHealthChecks();
+
             services.AddMvc(options =>
             {
                 if (!ConfigurationIsLocalOrDev())
@@ -132,6 +134,7 @@ namespace SFA.DAS.ToolsNotifications.Api
             });
 
             app.UseAuthentication();
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

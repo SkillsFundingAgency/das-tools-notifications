@@ -1,22 +1,19 @@
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
   name: das-tool-notifications-api
-  namespace: engineering
+  namespace: {{KubernetesNamespace}}
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: {{TlsSecretName}}
+    appgw.ingress.kubernetes.io/health-probe-path: "/health"
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`{{IngressHost}}`) && PathPrefix(`/api/notifications`)
-      kind: Rule
-      middlewares:
-        - name: secured
-      services:
-        - name: das-tools-notifications
-          port: 80
-  tls:
-    secretName: '{{TlsSecretName}}-correct-chain'
-    options:
-      name: enforce-tls-12
-      namespace: engineering
+  rules:
+  - host: {{IngressHost}}
+    http:
+      paths:
+      - path: /api/notifications
+        backend:
+          serviceName: das-tools-notifications
+          servicePort: 80
