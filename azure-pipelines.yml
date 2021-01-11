@@ -40,9 +40,6 @@ stages:
   - group: TEST Tools Service Shared
   - name: KubectlVersion
     value: 1.18.8
-  ##TO DO: update IngressHost value in 'Tools - ENV - TEST' and remove from pipeline file
-  - name: IngressHost
-    value: test-tools.apprenticeships.education.gov.uk
   jobs:
   - template: pipeline-templates/job/deploy.yml
     parameters:
