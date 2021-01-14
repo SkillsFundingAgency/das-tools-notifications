@@ -27,6 +27,10 @@ trigger:
 
 pr: none
 
+variables:
+  - name: KubectlVersion
+    value: 1.18.8
+
 stages:
 - template: pipeline-templates/stage/api-build.yml
 
@@ -38,8 +42,6 @@ stages:
   - group: Dev Management Resources
   - group: TEST Shared Resources
   - group: TEST Tools Service Shared
-  - name: KubectlVersion
-    value: 1.18.8
   jobs:
   - template: pipeline-templates/job/deploy.yml
     parameters:
@@ -52,7 +54,23 @@ stages:
       KeyVaultName: $(SharedKeyVaultName)
       KubernetesCluster: $(AKSSharedClusterName)
 
-## deploy to PROD stage
+- stage: DeployTo_PROD
+  displayName: DeployTo_PROD
+  variables:
+  - group: Prod Management Resources
+  - group: Prod Shared Resources
+  - group: PROD Tools Service Shared
+  jobs:
+  - template: pipeline-templates/job/deploy.yml
+    parameters:
+      Environment: PROD
+      KubectlVersion: $(KubectlVersion)
+      ServiceConnection: SFA-DIG-Prod-ARM
+      AksResourceGroup: $(AKSResourceGroupName)
+      AppGatewayName: $(AKSSharedAppGatewayName)
+      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
+      KeyVaultName: $(SharedKeyVaultName)
+      KubernetesCluster: $(AKSSharedClusterName)
 
 ## publish nuget package
 - template: pipeline-templates/stage/package-publish.yml
