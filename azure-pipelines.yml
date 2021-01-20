@@ -1,0 +1,77 @@
+resources:
+  repositories:
+  - repository: self
+  - repository: das-platform-building-blocks
+    type: github
+    name: SkillsFundingAgency/das-platform-building-blocks
+    ref: refs/tags/0.3.1
+    endpoint: SFA
+  - repository: das-platform-automation
+    type: github
+    name: SkillsFundingAgency/das-platform-automation
+    ref: refs/tags/4.2.8
+    endpoint: SFA
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - manifests/*
+      - pipeline-templates/*
+      - src/*
+      - azure-pipelines.yml
+      - Dockerfile
+
+pr: none
+
+variables:
+  - name: KubectlVersion
+    value: 1.18.8
+
+stages:
+- template: pipeline-templates/stage/api-build.yml
+
+- template: pipeline-templates/stage/package-build.yml
+
+- stage: DeployTo_DEV
+  displayName: DeployTo_DEV
+  variables:
+  - group: Dev Management Resources
+  - group: TEST Shared Resources
+  - group: DEV Tools Service Shared
+  jobs:
+  - template: pipeline-templates/job/deploy.yml
+    parameters:
+      Environment: DEV
+      KubectlVersion: $(KubectlVersion)
+      ServiceConnection: SFA-DAS-DevTest-ARM
+      AksResourceGroup: $(AKSResourceGroupName)
+      AppGatewayName: $(AKSSharedAppGatewayName)
+      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
+      KeyVaultName: $(SharedKeyVaultName)
+      KubernetesCluster: $(AKSSharedClusterName)
+
+- stage: DeployTo_PROD
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  displayName: DeployTo_PROD
+  variables:
+  - group: Prod Management Resources
+  - group: Prod Shared Resources
+  - group: PROD Tools Service Shared
+  jobs:
+  - template: pipeline-templates/job/deploy.yml
+    parameters:
+      Environment: PROD
+      KubectlVersion: $(KubectlVersion)
+      ServiceConnection: SFA-DIG-Prod-ARM
+      AksResourceGroup: $(AKSResourceGroupName)
+      AppGatewayName: $(AKSSharedAppGatewayName)
+      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
+      KeyVaultName: $(SharedKeyVaultName)
+      KubernetesCluster: $(AKSSharedClusterName)
+
+## publish nuget package
+- template: pipeline-templates/stage/package-publish.yml

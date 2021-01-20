@@ -46,8 +46,7 @@ namespace SFA.DAS.ToolsNotifications.Api
                         {
                             ValidAudiences = new List<string>
                             {
-                            _configuration["AzureADResourceId"],
-                            _configuration["AzureADClientId"]
+                                _configuration["AzureADResourceId"]                            
                             }
                         };
                     });
@@ -67,6 +66,8 @@ namespace SFA.DAS.ToolsNotifications.Api
             services.AddNotificationClient(_configuration.Get<NotificationClientConfiguration>());
             services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
             services.AddSingleton<INotificationService, NotificationService>();
+
+            services.AddHealthChecks();
 
             services.AddMvc(options =>
             {
@@ -133,6 +134,7 @@ namespace SFA.DAS.ToolsNotifications.Api
             });
 
             app.UseAuthentication();
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

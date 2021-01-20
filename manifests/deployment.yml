@@ -6,7 +6,7 @@ metadata:
     app: das-tools-notifications
     service: das-tool-service
   name: das-tools-notifications
-  namespace: {{Namespace}}
+  namespace: {{KubernetesNamespace}}
 spec:
   ports:
   - port: 80
@@ -24,7 +24,7 @@ metadata:
     app: das-tools-notifications
     service: das-tool-service
   name: das-tools-notifications
-  namespace: {{Namespace}}
+  namespace: {{KubernetesNamespace}}
 spec:
   replicas: 1
   selector:
@@ -42,23 +42,21 @@ spec:
         app: das-tools-notifications
         service: das-tool-service
     spec:
+      nodeSelector:
+        agentpool: tools01
       containers:
       - env:
         - name: RedisConnectionString
           value: {{RedisConnectionString}}
-        - name: APPINSIGHTS_INSTRUMENTATIONKEY
-          value: {{ApiAppInsightsInstrumentationkey}}
         - name: LoggingRedisConnectionString
           value: {{LoggingRedisConnectionString}}
         - name: EnvironmentName
           value: {{EnvironmentName}}
         - name: AzureAdTenantId
-          value: {{AzureAdTenantId}}
+          value: {{Tenant}}
         - name: AzureAdResourceId
-          value: {{AzureAdResourceId}}
-        - name: AzureAdClientId
-          value: {{AzureAdClientId}}
-        image: {{ApiImage}}
+          value: {{ToolsNotificationsApiIdentifierUri}}
+        image: apprenticeshipsdevops/das-tools-notifications:{{BuildNumber}}
         imagePullPolicy: IfNotPresent
         name: das-tools-notifications
         ports:
