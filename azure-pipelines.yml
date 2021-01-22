@@ -54,6 +54,24 @@ stages:
       KeyVaultName: $(SharedKeyVaultName)
       KubernetesCluster: $(AKSSharedClusterName)
 
+- stage: DeployTo_PREPROD
+  displayName: DeployTo_PREPROD
+  variables:
+  - group: PreProd Management Resources
+  - group: PreProd Shared Resources
+  - group: PREPROD Tools Service Shared
+  jobs:
+  - template: pipeline-templates/job/deploy.yml
+    parameters:
+      Environment: PREPROD
+      KubectlVersion: $(KubectlVersion)
+      ServiceConnection: SFA-DIG-PreProd-ARM
+      AksResourceGroup: $(AKSResourceGroupName)
+      AppGatewayName: $(AKSSharedAppGatewayName)
+      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
+      KeyVaultName: $(SharedKeyVaultName)
+      KubernetesCluster: $(AKSSharedClusterName)
+
 - stage: DeployTo_PROD
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: DeployTo_PROD
