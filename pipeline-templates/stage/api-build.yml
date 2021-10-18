@@ -1,3 +1,6 @@
+parameters:
+  ServiceConnection:
+
 stages:
 - stage: ApiBuild
   displayName: Build Image
@@ -6,32 +9,16 @@ stages:
     displayName: Build Image
     pool:
       name: DAS - Continuous Integration
-      demands:
-        - docker
+      demands: Agent.OS -equals Windows_NT
+
     steps:
-      - task: UseGitVersion@5
-        inputs:
-          versionSpec: 5.x
-          useConfigFile: true
-          configFilePath: GitVersion.yml
-
-      - task: Docker@2
-        displayName: Login to Docker Hub
-        inputs:
-          command: login
-          containerRegistry: Apprenticeships DevOps Docker Hub
-
-      - task: Docker@2
-        displayName: Build Image
-        inputs:
-          command: build
-          dockerfile: Dockerfile
-          repository: apprenticeshipsdevops/das-tools-notifications
-          tags: $(Build.BuildNumber)
-
-      - task: Docker@2
-        displayName: Push Image
-        inputs:
-          command: push
-          repository: apprenticeshipsdevops/das-tools-notifications
-          tags: $(Build.BuildNumber)
+    - task: UseGitVersion@5
+      inputs:
+        versionSpec: 5.x
+        useConfigFile: true
+        configFilePath: GitVersion.yml
+    - template: azure-pipelines-templates/build/step/dockerfile-build.yml@das-platform-building-blocks
+      parameters:
+        ContainerRegistryName: $(PublicAcrName)
+        ServiceConnection: ${{ parameters.ServiceConnection }}
+        ImageName: das-tools-service

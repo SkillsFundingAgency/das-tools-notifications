@@ -28,11 +28,14 @@ trigger:
 pr: none
 
 variables:
-  - name: KubectlVersion
-    value: 1.18.8
+- name: KubectlVersion
+  value: 1.18.8
+- group: Release Management Resources
 
 stages:
 - template: pipeline-templates/stage/api-build.yml
+  parameters:
+    ServiceConnection: SFA-DIG-Prod-ARM
 
 - template: pipeline-templates/stage/package-build.yml
 
