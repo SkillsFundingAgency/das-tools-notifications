@@ -21,4 +21,4 @@ stages:
       parameters:
         ContainerRegistryName: $(PublicAcrName)
         ServiceConnection: ${{ parameters.ServiceConnection }}
-        ImageName: das-tools-service
+        ImageName: $(ContainerImageName)
