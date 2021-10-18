@@ -56,7 +56,7 @@ spec:
           value: {{Tenant}}
         - name: AzureAdResourceId
           value: {{ToolsNotificationsApiIdentifierUri}}
-        image: apprenticeshipsdevops/das-tools-notifications:{{BuildNumber}}
+        image: {{PublicAcrName}}.azurecr.io/{{ContainerImageName}}:{{BuildNumber}}
         imagePullPolicy: IfNotPresent
         name: das-tools-notifications
         ports:
