@@ -8,8 +8,7 @@ stages:
   - job: build_image
     displayName: Build Image
     pool:
-      name: DAS - Continuous Integration
-      demands: Agent.OS -equals Linux
+      name: DAS - Continuous Integration Agents
 
     steps:
     - task: UseGitVersion@5
