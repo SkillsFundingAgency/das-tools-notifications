@@ -3,7 +3,7 @@ stages:
   dependsOn: PackageBuild
   displayName: Publish Nuget Package
   pool:
-    name: DAS - Continuous Deployment
+    name: DAS - Continuous Deployment Agents
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'Manual'))
   jobs:
   - job: CleanArtifacts
