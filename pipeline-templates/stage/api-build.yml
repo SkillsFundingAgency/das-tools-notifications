@@ -21,3 +21,4 @@ stages:
         ContainerRegistryName: $(PublicAcrName)
         ServiceConnection: ${{ parameters.ServiceConnection }}
         ImageName: $(ContainerImageName)
+        BranchToCreateLatestTag: master
