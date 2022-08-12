@@ -2,7 +2,7 @@
 
 namespace SFA.DAS.ToolsNotifications.Api.Models
 {
-    public class NotificationDto
+    public struct NotificationDto
     {
         [JsonProperty("title", Required = Required.Always)]
         public string Title { get; set; }

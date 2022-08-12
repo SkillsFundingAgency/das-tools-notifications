@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80"
+    environment:
+      RedisConnectionString: redis:6379
+      EnvironmentName: LOCAL
+      ASPNETCORE_ENVIRONMENT: Development
+  redis:
+    image: "redis:alpine"
