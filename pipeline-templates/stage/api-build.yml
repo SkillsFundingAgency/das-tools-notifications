@@ -8,8 +8,7 @@ stages:
   - job: build_image
     displayName: Build Image
     pool:
-      name: DAS - Continuous Integration Agents
-
+      vmImage: ubuntu-latest
     steps:
     - task: UseGitVersion@5
       inputs:

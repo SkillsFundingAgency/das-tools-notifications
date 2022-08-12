@@ -18,12 +18,10 @@ trigger:
     include:
       - "master"
   paths:
-    include:
-      - manifests/*
-      - pipeline-templates/*
-      - src/*
-      - azure-pipelines.yml
-      - Dockerfile
+    exclude:
+      - LICENSE
+      - README.md
+      - .gitignore
 
 variables:
 - name: KubectlVersion
