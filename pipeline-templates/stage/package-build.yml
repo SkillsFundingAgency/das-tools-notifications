@@ -5,7 +5,7 @@ stages:
   - job: build_package
     displayName: Build Package
     pool:
-      name: DAS - Continuous Integration
+      name: DAS - Continuous Integration Agents
     steps:
     - task: UseGitVersion@5
       inputs:
