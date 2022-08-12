@@ -48,8 +48,6 @@ spec:
       - env:
         - name: RedisConnectionString
           value: {{RedisConnectionString}}
-        - name: LoggingRedisConnectionString
-          value: {{LoggingRedisConnectionString}}
         - name: EnvironmentName
           value: {{EnvironmentName}}
         - name: AzureAdTenantId
