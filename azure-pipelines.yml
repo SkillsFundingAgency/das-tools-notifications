@@ -4,7 +4,7 @@ resources:
   - repository: das-platform-building-blocks
     type: github
     name: SkillsFundingAgency/das-platform-building-blocks
-    ref: refs/tags/0.4.63
+    ref: refs/tags/0.4.73
     endpoint: SFA
   - repository: das-platform-automation
     type: github
@@ -27,7 +27,7 @@ trigger:
 
 variables:
 - name: KubectlVersion
-  value: 1.18.8
+  value: 1.23.8
 - name: ContainerImageName
   value: das-tools-notifications
 - group: Release Management Resources
@@ -38,24 +38,6 @@ stages:
     ServiceConnection: SFA-DIG-Prod-ARM
 
 - template: pipeline-templates/stage/package-build.yml
-
-- stage: DeployTo_DEV
-  displayName: DeployTo_DEV
-  variables:
-  - group: Dev Management Resources
-  - group: TEST Shared Resources
-  - group: DEV Tools Service Shared
-  jobs:
-  - template: pipeline-templates/job/deploy.yml
-    parameters:
-      Environment: DEV
-      KubectlVersion: $(KubectlVersion)
-      ServiceConnection: SFA-DAS-DevTest-ARM
-      AksResourceGroup: $(AKSResourceGroupName)
-      AppGatewayName: $(AKSSharedAppGatewayName)
-      AppGatewayResourceGroup: $(AKSSharedNodeResourceGroupName)
-      KeyVaultName: $(SharedKeyVaultName)
-      KubernetesCluster: $(AKSSharedClusterName)
 
 - stage: DeployTo_PREPROD
   displayName: DeployTo_PREPROD
