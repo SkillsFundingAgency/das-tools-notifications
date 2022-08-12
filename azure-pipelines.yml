@@ -31,11 +31,11 @@ variables:
 - group: Release Management Resources
 
 stages:
-- template: pipeline-templates/stage/api-build.yml
+- template: pipeline-templates/stage/code-build.yml
   parameters:
     ServiceConnection: SFA-DIG-Prod-ARM
 
-- template: pipeline-templates/stage/package-build.yml
+- template: azure-pipelines-templates/deploy/stage/nuget-publish.yml@das-platform-building-blocks
 
 - stage: DeployTo_PREPROD
   displayName: DeployTo_PREPROD
@@ -74,5 +74,3 @@ stages:
       KeyVaultName: $(SharedKeyVaultName)
       KubernetesCluster: $(AKSSharedClusterName)
 
-## publish nuget package
-- template: pipeline-templates/stage/package-publish.yml
