@@ -26,4 +26,6 @@ stages:
       displayName: Integration Test
     - template: azure-pipelines-templates/build/step/nuget-pack.yml@das-platform-building-blocks
       parameters:
-        DotNetStandardPackagesToPack: src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj
+        DotNetStandardPackagesToPack: | 
+          src/SFA.DAS.ToolsNotifications.Client/SFA.DAS.ToolsNotifications.Client.csproj;
+          src/SFA.DAS.ToolsNotifications.Types/SFA.DAS.ToolsNotifications.Types.csproj
