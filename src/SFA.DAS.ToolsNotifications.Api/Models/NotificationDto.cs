@@ -1,16 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using SFA.DAS.ToolsNotifications.Api.Models.Converters;
 
 namespace SFA.DAS.ToolsNotifications.Api.Models
 {
+    [JsonConverter(typeof(NotificationDtoRequiredPropertyConverter))] 
     public struct NotificationDto
     {
-        [JsonProperty("title", Required = Required.Always)]
         public string Title { get; set; }
 
-        [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
-        [JsonProperty("enabled", Required = Required.Always)]
         public bool Enabled { get; set; }
     }
 }

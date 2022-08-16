@@ -10,16 +10,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.*" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
     <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="6.3.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0" />
-
 
     <!-- Transitive updates -->
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.*" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.*" />
   </ItemGroup>
 
   <ItemGroup>

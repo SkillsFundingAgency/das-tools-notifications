@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.ToolsNotifications.Client\SFA.DAS.ToolsNotifications.Client.csproj" />
     <ProjectReference Include="..\SFA.DAS.ToolsNotifications.Types\SFA.DAS.ToolsNotifications.Types.csproj" />
   </ItemGroup>

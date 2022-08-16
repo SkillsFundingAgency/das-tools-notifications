@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using SFA.DAS.ToolsNotifications.Types.Entities;
 using SFA.DAS.ToolsNotifications.Client.Configuration;
 using StackExchange.Redis;
+using System.Text.Json;
 
 namespace SFA.DAS.ToolsNotifications.Client.Requests
 {
@@ -19,12 +19,12 @@ namespace SFA.DAS.ToolsNotifications.Client.Requests
         public async Task<Notification> GetNotification()
         {
             var notificationJson = await _redis.GetDatabase().StringGetAsync(_cacheKey);
-            return JsonConvert.DeserializeObject<Notification>(notificationJson);
+            return JsonSerializer.Deserialize<Notification>(notificationJson);
         }
 
         public async Task SetNotification(Notification notification)
         {
-            var notificationJson = JsonConvert.SerializeObject(notification);
+            var notificationJson = JsonSerializer.Serialize(notification);
             await _redis.GetDatabase().StringSetAsync(_cacheKey, notificationJson);
         }
     }
