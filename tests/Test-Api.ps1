@@ -1,6 +1,6 @@
 cd $PSScriptRoot/..
 docker-compose up --detach
-Start-Sleep -Seconds 15 # do better
+Start-Sleep -Seconds 5 # do better
 $Body = @"
 {
     "title": "test1",
