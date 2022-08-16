@@ -1,16 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SFA.DAS.ToolsNotifications.Api.Models
 {
-    public class NotificationDto
+    public struct NotificationDto : IJsonOnDeserialized
     {
-        [JsonProperty("title", Required = Required.Always)]
         public string Title { get; set; }
 
-        [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
-        [JsonProperty("enabled", Required = Required.Always)]
         public bool Enabled { get; set; }
+
+        public void OnDeserialized()
+        {
+           if(Title == default)
+                throw new JsonException("Required property 'Title' not received in the JSON");
+            else if(Description == default)
+                throw new JsonException("Required property 'Description' not received in the JSON");
+            else if(Enabled == default)
+                throw new JsonException("Required property 'Enabled' not received in the JSON");
+        }
     }
 }

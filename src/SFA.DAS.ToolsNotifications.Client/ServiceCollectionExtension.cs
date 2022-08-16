@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using SFA.DAS.ToolsNotifications.Client.Configuration;
 using SFA.DAS.ToolsNotifications.Client.Requests;
 
