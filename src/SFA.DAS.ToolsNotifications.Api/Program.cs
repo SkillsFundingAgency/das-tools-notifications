@@ -20,6 +20,8 @@ builder.Services.AddApplicationInsightsTelemetry();
 // Configure the HTTP request pipeline.
 if (!environment.IsDevelopment())
 {
+    var azureAdResourceId = configuration["AzureADResourceId"] ?? throw new ArgumentNullException("AzureADResourceId config missing");
+
     builder.Services.AddAuthentication(auth => { auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
                     .AddJwtBearer(auth =>
                     {
@@ -29,7 +31,7 @@ if (!environment.IsDevelopment())
                         {
                             ValidAudiences = new List<string>
                             {
-                                configuration["AzureADResourceId"]
+                                azureAdResourceId
                             }
                         };
                     });
@@ -46,7 +48,8 @@ if (!environment.IsDevelopment())
     });
 }
 
-builder.Services.AddNotificationClient(configuration.Get<NotificationClientConfiguration>());
+var notificationClientConfiguration = configuration.Get<NotificationClientConfiguration>() ?? throw new ArgumentNullException("NotificationClientConfiguration config missing");
+builder.Services.AddNotificationClient(notificationClientConfiguration);
 builder.Services.AddSingleton<INotificationRepository, NotificationRedisRepository>();
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 
@@ -117,10 +120,6 @@ app.UseAuthorization();
 app.UseAuthentication();
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 app.Run();

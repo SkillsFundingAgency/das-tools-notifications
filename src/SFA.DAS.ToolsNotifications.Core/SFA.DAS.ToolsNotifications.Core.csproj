@@ -12,6 +12,6 @@
     <ProjectReference Include="..\SFA.DAS.ToolsNotifications.Types\SFA.DAS.ToolsNotifications.Types.csproj" />
 
     <!-- Transitive updates -->
-    <PackageReference Include="System.Drawing.Common" Version="5.0.*" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
   </ItemGroup>
 </Project>
