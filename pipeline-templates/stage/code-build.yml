@@ -10,10 +10,8 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: UseDocker@0
-      displayName: Use Docker
-      inputs:
-        dockerVersion: 20.10.x
+    - task: DockerInstaller@0
+      displayName: Ensure Docker Installed
 
     - script: |
         sudo apt-get update
