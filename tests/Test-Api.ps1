@@ -1,17 +1,18 @@
 cd $PSScriptRoot/..
 docker-compose up --detach
 
-# Retry mechanism to wait for the service to be ready
-$maxRetries = 10
+# Retry mechanism with increased timeout
+$maxRetries = 20 # Increase retries
 $retry = 0
 while ($retry -lt $maxRetries) {
     try {
         Invoke-RestMethod -Method GET -Uri "http://localhost:8000/health"
         break
     } catch {
-        Start-Sleep -Seconds 5
+        Start-Sleep -Seconds 5 # Adjust delay between retries
         $retry++
         if ($retry -eq $maxRetries) {
+            docker-compose logs web # Print logs for debugging
             throw "Service did not start in time"
         }
     }
