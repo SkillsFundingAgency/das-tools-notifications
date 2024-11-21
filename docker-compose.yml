@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:80"
     environment:
-      RedisConnectionString: redis:6379
+      RedisConnectionString: 127.0.0.1:6379
       EnvironmentName: LOCAL
       ASPNETCORE_ENVIRONMENT: Development
   redis:
