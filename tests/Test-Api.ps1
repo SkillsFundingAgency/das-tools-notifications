@@ -10,7 +10,7 @@ $Body = @"
 "@
 
 try {
-  Invoke-RestMethod -Method POST -Uri "http://localhost:80/" -Headers @{ "Content-Type"="application/json" } -Body $Body
+  Invoke-RestMethod -Method POST -Uri "http://127.0.0.1:80/" -Headers @{ "Content-Type"="application/json" } -Body $Body
 }
 Catch {
   if($_.ErrorDetails.Message) {
@@ -22,7 +22,7 @@ Catch {
   }
 }
 
-$TestResponse = Invoke-RestMethod -Method GET -Uri "http://localhost:80/"
+$TestResponse = Invoke-RestMethod -Method GET -Uri "http://127.0.0.1:80/"
 Write-Host $TestResponse
 $Assert = Compare-Object $TestResponse ($Body | ConvertFrom-Json)
 if($null -ne $Assert){
