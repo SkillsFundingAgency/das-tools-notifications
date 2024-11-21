@@ -8,7 +8,20 @@ $Body = @"
     "enabled": true
 }
 "@
-Invoke-RestMethod -Method POST -Uri "http://localhost:8000/" -Headers @{ "Content-Type"="application/json" } -Body $Body
+
+try {
+  Invoke-RestMethod -Method POST -Uri "http://localhost:8000/" -Headers @{ "Content-Type"="application/json" } -Body $Body
+}
+Catch {
+  if($_.ErrorDetails.Message) {
+    #WebResponseError
+    Write-Host $_.ErrorDetails.Message;
+  } else {
+    #UsualException
+    $_
+  }
+}
+
 $TestResponse = Invoke-RestMethod -Method GET -Uri "http://localhost:8000/"
 Write-Host $TestResponse
 $Assert = Compare-Object $TestResponse ($Body | ConvertFrom-Json)

@@ -8,6 +8,5 @@ services:
       RedisConnectionString: 127.0.0.1:6379
       EnvironmentName: LOCAL
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS=http://+:8000
   redis:
     image: "redis:alpine"
