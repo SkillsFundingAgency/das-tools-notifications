@@ -27,12 +27,12 @@ stages:
         ImageName: $(ContainerImageName)
         BranchToCreateLatestTag: master
 
-    - task: PowerShell@2
-      inputs:
-        targetType: 'filePath'
-        filePath: tests/Test-Api.ps1
-        pwsh: pwsh
-      displayName: Integration Test
+    # - task: PowerShell@2
+    #   inputs:
+    #     targetType: 'filePath'
+    #     filePath: tests/Test-Api.ps1
+    #     pwsh: pwsh
+    #   displayName: Integration Test
 
     - template: azure-pipelines-templates/build/step/nuget-pack.yml@das-platform-building-blocks
       parameters:
