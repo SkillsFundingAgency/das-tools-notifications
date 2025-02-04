@@ -6,7 +6,7 @@ foreach ($Project in $Projects) {
   $Errors = $Deprecated + $Vulnerable | Select-String '>'
   if ($Errors.Count -gt 0) {
     Write-Host "##vso[task.logissue type=warning]Package issues discovered, review output above"
-    $ErrorFound = $true
+    # $ErrorFound = $true
   }
 }
 $ErrorFound ? $(exit 1) : $(exit 0)

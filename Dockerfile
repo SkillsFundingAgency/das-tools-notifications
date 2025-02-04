@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 
 ENV PROJECT_PATH=SFA.DAS.ToolsNotifications.Api/SFA.DAS.ToolsNotifications.Api.csproj
 COPY ./src ./src
@@ -11,7 +11,7 @@ RUN ./tests/Test-Packages.ps1
 RUN dotnet build src/$PROJECT_PATH -c release --no-restore
 RUN dotnet publish src/$PROJECT_PATH -c release --no-build -o /app
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "SFA.DAS.ToolsNotifications.Api.dll"]
